@@ -78,6 +78,7 @@
 
     _proto._getInputValue = function _getInputValue() {
       if (!this._options.input) return;
+      if (this._options.val) return this._options.val.call(this, this._input);
       return $(this._input).val();
     };
 
