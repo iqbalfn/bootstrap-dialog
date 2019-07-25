@@ -16,13 +16,14 @@ import $ from 'jquery'
 const NAME               = 'dialog'
 const VERSION            = '0.0.1'
 
-const Default = {}
-
-const Event = {}
-
-const ClassName = {}
-
-const Selector = {}
+const Default = {
+    button: {
+        type    : 'light',
+        label   : 'Cancel',
+        dismiss : false,
+        focus   : false
+    }
+}
 
 /**
  * ------------------------------------------------------------------------
@@ -34,7 +35,7 @@ class Dialog {
 
     constructor(options){
         this._confirmed = false
-        this._options = options
+        this._options   = options
         this._makeModal()
         this._showModal()
     }
@@ -52,12 +53,7 @@ class Dialog {
     // Private
 
     _btnOptions(btn){
-        let btns = {
-            type: 'light',
-            label: 'Submit',
-            dismiss: false,
-            focus: false
-        }
+        let btns = Default.button
 
         for(let k in btns){
             if(typeof btn[k] === 'undefined')
@@ -75,7 +71,7 @@ class Dialog {
     }
 
     _makeInput(){
-        let tmpl = '';
+        let tmpl  = '';
         let input = this._options.input
 
         switch(input.type){
@@ -173,7 +169,10 @@ class Dialog {
         })
 
         $(this._modal).on('shown.bs.modal', event => {
-            $(this._modal).find('.btn-focus-first').focus()
+            if(this._input)
+                $(this._input).focus()
+            else
+                $(this._modal).find('.btn-focus-first').focus()
         })
     }
 

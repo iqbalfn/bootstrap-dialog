@@ -35,12 +35,20 @@
 
   var NAME = 'dialog';
   var VERSION = '0.0.1';
-  var Default = {};
-  /**
-   * ------------------------------------------------------------------------
-   * Class Definition
-   * ------------------------------------------------------------------------
-   */
+  var Default = {
+    button: {
+      type: 'light',
+      label: 'Cancel',
+      dismiss: false,
+      focus: false
+    }
+    /**
+     * ------------------------------------------------------------------------
+     * Class Definition
+     * ------------------------------------------------------------------------
+     */
+
+  };
 
   var Dialog =
   /*#__PURE__*/
@@ -59,12 +67,7 @@
 
     // Private
     _proto._btnOptions = function _btnOptions(btn) {
-      var btns = {
-        type: 'light',
-        label: 'Submit',
-        dismiss: false,
-        focus: false
-      };
+      var btns = Default.button;
 
       for (var k in btns) {
         if (typeof btn[k] === 'undefined') btn[k] = btns[k];
@@ -153,7 +156,7 @@
         _this._options.callback.call(_this, arg);
       });
       $(this._modal).on('shown.bs.modal', function (event) {
-        $(_this._modal).find('.btn-focus-first').focus();
+        if (_this._input) $(_this._input).focus();else $(_this._modal).find('.btn-focus-first').focus();
       });
     };
 
